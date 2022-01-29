@@ -1,7 +1,7 @@
 Oneby
 =======
 
-** Creates an effect that randomly displays text one character at a time.
+Creates an effect that randomly displays text one character at a time.
 
 ## Notes
 - All modern browsers are supported.
