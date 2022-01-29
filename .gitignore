@@ -1,0 +1,16 @@
+# .gitignore 1.0.0
+# Update: 2021.01.27
+# Author: YAMADA Naoko
+
+# Directories
+/sass-chache
+/node_modules
+# /dist
+
+# Files
+start.bat
+config.rb
+.idea
+.DC_Store
+start.command
+*.log
