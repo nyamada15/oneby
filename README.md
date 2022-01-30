@@ -52,4 +52,4 @@ Effect of characters appear can customize override css properties.
 See /src/style.scss for details.
 
 ## Demo
-See /index.html.
+See https://nyamada15.github.io/oneby/.
