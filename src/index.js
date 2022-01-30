@@ -4,6 +4,8 @@ import "regenerator-runtime/runtime";
 
 'use strict';
 
+const CLASS_SET = "one_by_one";
+const CLASS_EXE = "is_show";
 
 /**
  * Oneby
@@ -11,51 +13,62 @@ import "regenerator-runtime/runtime";
  * @param {string} selector 
  * @returns Object
  */ 
-// function Oneby(selector) {
-    
-//     jQuery(selector).each(function(i) {
-//         var $this = jQuery(this);
-//         var delay = $this.data('delay') ? $this.data('delay') : 0;
-//         var interval = $this.data('interval') ? $this.data('interval') : 0;
-        
-//         $this.addClass("one_by_one").html(getHtml($this.html(), delay, interval));
-        
-        
-//     });
-//     return {
-//         runEffect: function($elm) {
-//             if ($elm) {
-//                 $elm.addClass("is_show");
-//             } else {
-//                 jQuery(selector).addClass("is_show");
-//             }
-            
-//         }
-//     }
-// }
+
 window.Oneby = (selector) => {
+    const elm = document.querySelectorAll(selector);  // Nodelist
+    let isOneElement = true;
+    if (elm.length > 1) {
+        isOneElement = false;
+    }
+    for(let element of elm) {
+        exeOneby(element);
+    }
     
-    jQuery(selector).each(function(i) {
-        var $this = jQuery(this);
-        var delay = $this.data('oneby-delay') ? $this.data('oneby-delay') : 0;
-        var interval = $this.data('oneby-interval') ? $this.data('oneby-interval') : 0;
-        var duration = $this.data('oneby-duration') ? $this.data('oneby-duration') : null;
-        
-        $this.addClass("one_by_one").html(getHtml($this.html(), delay, interval, duration));
-        
-        
-    });
     return {
-        runEffect: function($elm) {
-            if ($elm) {
-                $elm.addClass("is_show");
-            } else {
-                jQuery(selector).addClass("is_show");
+        runEffect: function(element) {
+            try {
+                if (element) {
+                    if (element.length > 1) {
+                        throw new Error("Invalid parameter.");
+                    } else {
+                        element.classList.add(CLASS_EXE);
+                    }
+                    
+                } else {
+                    if (isOneElement) {
+                        elm.item(0).classList.add(CLASS_EXE);
+                    } else {
+                        throw new Error("Prameter(Element Object) is needed.");
+                    }
+                    
+                }
+            } catch (e) {
+                console.error(e.message);
             }
+            
             
         }
     }
 };
+
+/**
+ * Set effect.
+ * @param {Element} elm 
+ */
+function exeOneby(elm) {
+
+    // Data属性取得
+    const text = elm.innerHTML;
+    const delay = elm.dataset.onebyDelay ? parseFloat(elm.dataset.onebyDelay) : 0;
+    const interval = elm.dataset.onebyInterval ? parseFloat(elm.dataset.onebyInterval) : 0;
+    const duration = elm.dataset.onebyDuration ? elm.dataset.onebyDuration : null;
+
+
+    // elmにクラス（one_by_one）設定
+    elm.classList.add(CLASS_SET);
+
+    elm.innerHTML = getHtml(text, delay, interval, duration);
+}
 
 /**
  * 1文字ずつ<span>でくくったHTMLを返す
@@ -65,17 +78,27 @@ window.Oneby = (selector) => {
  * @returns 
  */
 function getHtml(text, delay, interval, duration) {
-    var charObjArray = addRundomOrder(text.split(""));
-    var html = "";
-    charObjArray.forEach(function(obj) {
-        var tDelay = Math.round((delay + interval * obj.order) * 100) / 100;
+    const charObjArray = addRundomOrder(text.split(""));
+    let html = "";
+    // charObjArray.forEach((obj) => {
+    //     const tDelay = Math.round((delay + interval * obj.order) * 100) / 100;
+    //     if (duration) {
+    //         html += `<span class="oneby_char" style="transition-delay: ${tDelay}s;transition-duration: ${duration}s;">${obj.char}</span>`;
+    //     } else {
+    //         html += `<span class="oneby_char" style="transition-delay: ${tDelay}s">${obj.char}</span>`;
+    //     }
+        
+    // });
+    for(let obj of charObjArray) {
+        
+        const tDelay = Math.round((delay + interval * obj.order) * 100) / 100;
         if (duration) {
-            html += '<span class="oneby_char" style="transition-delay:' + tDelay + 's;transition-duration:' + duration + 's, ' + duration + 's;">' + obj.char + '</span>';
+            html += `<span class="oneby_char" style="transition-delay: ${tDelay}s;transition-duration: ${duration}s;">${obj.char}</span>`;
         } else {
-            html += '<span class="oneby_char" style="transition-delay:' + tDelay + 's">' + obj.char + '</span>';
+            html += `<span class="oneby_char" style="transition-delay: ${tDelay}s">${obj.char}</span>`;
         }
         
-    });
+    };
     return html;
 }
 
@@ -85,16 +108,16 @@ function getHtml(text, delay, interval, duration) {
  * @returns {obj[]}
  */
 function addRundomOrder(array) {
-    var tArray = [], rArray = [];
+    let tArray = [], rArray = [];
 
     // 仮配列（0 ~)を作成
-    for(var i = 0; i < array.length; i++) {
+    for(let i = 0; i < array.length; i++) {
         tArray[i] = i;
     }
     tArray = arrayShuffle(tArray);
     
     // シャッフル
-    for(var i = 0; i < array.length; i++) {
+    for(let i = 0; i < array.length; i++) {
         rArray[i] = {
             char: array[i],
             order: tArray[i]
@@ -109,27 +132,16 @@ function addRundomOrder(array) {
  * @returns number[]
  */
 function arrayShuffle(array) {
-    for(var i = (array.length - 1); 0 < i; i--){
+    for(let i = (array.length - 1); 0 < i; i--){
 
         // 0〜(i+1)の範囲で値を取得
-        var r = Math.floor(Math.random() * (i + 1));
+        const r = Math.floor(Math.random() * (i + 1));
 
         // 要素の並び替えを実行
-        var tmp = array[i];
+        const tmp = array[i];
         array[i] = array[r];
         array[r] = tmp;
     }
     return array;
 }
 
-
-// 実行
-// $(function() {
-// 	var kvCopy = new Oneby('#demo_oneby');
-//     setTimeout(function() {
-//         kvCopy.runEffect();
-//     }, 500);
-    
-    
-// });
-	

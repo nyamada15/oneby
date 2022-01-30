@@ -4,14 +4,13 @@ Oneby
 Creates an effect that randomly displays text one character at a time.
 
 ## Notes
-- All modern browsers are supported.
-- jQuery is required.
+- All modern browsers and IE11 are supported.
+- jQuery is not required.
 - No support for HTML tags in text.
 
 ## Start
 Include the JS file from the dist folder.
 ```html
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./dist/oneby.min.js" ></script>
 ```
 
@@ -22,9 +21,20 @@ data-oneby-delay, data-oneby-interval and data-oneby-duration attributes are opt
 ```
 
 Execution.
+In case of Id selector.
 ```javascript
-var kvCopy = new Oneby('#test_oneby');
-kvCopy.runEffect();
+var idElm = new Oneby('#demo_oneby');
+idElm.runEffect();  // Parameter is unnecessary.
+```
+
+Execution.
+In case of Class selector.
+```javascript
+var idElm = new Oneby('.demo_oneby_class');
+var nodelist = document.querySelectorAll('.demo_oneby_class');
+for (var i = 0; i < nodelist.length; i++) {
+    classElm.runEffect(nodelist[i]);    // Parameter of Element Object is required.
+}
 ```
 
 ## Options
