@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMO Oneby</title>
+
+
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+        }
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(60deg, #FFDEE9 0%, #FFDEE9 20%, #B5FFFC 80%, #B5FFFC 100%);
+        }
+        #demo_oneby, .demo_oneby_class {
+            font-size: 5vw;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-align: center;
+            font-family: sans-serif;
+            color: #acacac;
+        }
+        .demo_oneby_class {
+            color: #fff;
+        }
+    </style>
+
+
+    <script src="./dist/oneby.min.js" ></script>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div id="demo_oneby" data-oneby-delay="0.2" data-oneby-interval="0.1" data-oneby-duration="0.6">ONEBY EFFECT</div>
+        <div class="demo_oneby_class" data-oneby-delay="0.2" data-oneby-interval="0.1" data-oneby-duration="0.6">ONEBY EFFECTs</div>
+        <div class="demo_oneby_class" data-oneby-delay="0.2" data-oneby-interval="0.1" data-oneby-duration="0.6">ONEBY EFFECTs</div>
+    </div>
+
+<script>
+
+// ID（対象１つ）に設定
+var idElm = new Oneby('#demo_oneby');
+window.addEventListener("load", function() {
+    idElm.runEffect();
+});
+
+// Class（対象複数）に設定
+var classElm = new Oneby('.demo_oneby_class');
+window.addEventListener("load", function() {
+    var nodelist = document.querySelectorAll('.demo_oneby_class');
+    for (var i = 0; i < nodelist.length; i++) {
+        classElm.runEffect(nodelist[i]);
+    }
+});
+
+
+</script>
+</body>
+</html>
