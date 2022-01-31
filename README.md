@@ -30,7 +30,7 @@ idElm.runEffect();  // Parameter is unnecessary.
 Execution.
 In case of Class selector.
 ```javascript
-var idElm = new Oneby('.demo_oneby_class');
+var classElm = new Oneby('.demo_oneby_class');
 var nodelist = document.querySelectorAll('.demo_oneby_class');
 for (var i = 0; i < nodelist.length; i++) {
     classElm.runEffect(nodelist[i]);    // Parameter of Element Object is required.
