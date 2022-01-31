@@ -1,4 +1,4 @@
-Oneby
+Oneby 2.0.0
 =======
 
 Creates an effect that randomly displays text one character at a time.
@@ -6,7 +6,7 @@ Creates an effect that randomly displays text one character at a time.
 ## Notes
 - All modern browsers and IE11 are supported.
 - jQuery is not required.
-- No support for HTML tags in text.
+- No support for HTML tags in text. support for `<br>` only.
 
 ## Start
 Include the JS file from the dist folder.
